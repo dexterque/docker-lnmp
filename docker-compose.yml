@@ -22,6 +22,9 @@ services:
         - mysql
         - redis:redis
         - memcached:memcached
+      links:
+        - memcached:memcached
+        - redis:redis
 
 ### PHP-CLI Container #######################################
 
