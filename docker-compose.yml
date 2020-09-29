@@ -22,8 +22,6 @@ services:
         - mysql
         - redis
         - memcached
-      networks:
-        - lnmp
 
 ### PHP-CLI Container #######################################
 
@@ -37,8 +35,6 @@ services:
         - mysql
         - redis
         - memcached
-      networks:
-        - lnmp
 
 ### Nginx Server Container ##################################
 
@@ -52,8 +48,6 @@ services:
           - "443:443"
       depends_on:
           - php-fpm
-      networks:
-          - lnmp
           
 
 ### MySQL Container #########################################
@@ -66,8 +60,6 @@ services:
         - "3306:3306"
       environment:
         - MYSQL_ROOT_PASSWORD=123456
-      networks:
-        - lnmp
         
 ### redis Container #############################
     redis:
@@ -80,16 +72,12 @@ services:
       volumes:
         - ./data/redis:/data
       command: redis-server --appendonly yes 
-      networks:
-        - lnmp
     
 ### memecached Container ##########
     memcached:
       image: memcached
       expose:
         - "11211"
-      networks:
-        - lnmp
     
 ### PHPMyAdmin Container #########################################
 
@@ -99,12 +87,9 @@ services:
         - "8080:80"
       depends_on:
         - mysql
-      networks:
-        - lnmp
 
 ### Networks ###################################
-    networks:
-      lnmp
+
 
 ### Volumes Setup ###########################################
 
