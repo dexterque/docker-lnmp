@@ -87,7 +87,7 @@ services:
       ports:
         - "8080:80"
       links:
-          - mysql:db
+          - mysql
 
 ### Volumes Setup ###########################################
 
