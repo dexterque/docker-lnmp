@@ -83,7 +83,7 @@ services:
 ### PHPMyAdmin Container #########################################
 
     phpmyadmin:
-      image: phpmyadmin/phpmyadmin
+      image: daocloud.io/daocloud/phpmyadmin
       ports:
         - "8080:80"
       links:
