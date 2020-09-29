@@ -20,8 +20,8 @@ services:
         - "9000"
       depends_on:
         - mysql
-        - redis:redis
-        - memcached:memcached
+        - redis
+        - memcached
       links:
         - memcached:memcached
         - redis:redis
