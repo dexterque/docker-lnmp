@@ -76,10 +76,8 @@ services:
     
 ### memecached Container ##########
     memcached:
-    image: memcached
-    networks:
-        - lnmp
-    expose:
+      image: memcached
+      expose:
         - "11211"
     
 ### PHPMyAdmin Container #########################################
