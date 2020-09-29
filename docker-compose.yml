@@ -22,9 +22,8 @@ services:
         - mysql
         - redis
         - memcached
-      links:
-        - memcached
-        - redis
+      networks:
+        - lnmp
 
 ### PHP-CLI Container #######################################
 
@@ -88,8 +87,12 @@ services:
         - "8080:80"
       depends_on:
         - mysql
-      links:
-        - mysql
+      networks:
+        - lnmp
+
+### Networks ###################################
+    networks:
+      lnmp
 
 ### Volumes Setup ###########################################
 
