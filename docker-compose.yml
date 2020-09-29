@@ -54,7 +54,7 @@ services:
 ### MySQL Container #########################################
 
     mysql:
-      image: daocloud.io/library/mysql:5.8
+      image: daocloud.io/library/mysql:5.7
       volumes:
         - mysql-data:/var/lib/mysql
       ports:
