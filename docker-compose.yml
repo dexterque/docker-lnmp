@@ -23,8 +23,8 @@ services:
         - redis
         - memcached
       links:
-        - memcached:memcached
-        - redis:redis
+        - memcached
+        - redis
 
 ### PHP-CLI Container #######################################
 
@@ -36,7 +36,7 @@ services:
       tty: true
       depends_on:
         - mysql
-        - redis:redis
+        - redis
 
 ### Nginx Server Container ##################################
 
