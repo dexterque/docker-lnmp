@@ -86,8 +86,10 @@ services:
       image: daocloud.io/daocloud/phpmyadmin
       ports:
         - "8080:80"
+      depends_on:
+        - mysql
       links:
-          - mysql
+        - mysql
 
 ### Volumes Setup ###########################################
 
