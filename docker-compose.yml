@@ -11,87 +11,108 @@ services:
 
 ### PHP-FPM Container #######################################
 
-    php-fpm:
-      build:
-        context: ./php
-      volumes:
-        - ../www:/var/www/html
-      expose:
-        - "9000"
-      depends_on:
-        - mysql
-        - redis
-        - memcached
+  php-fpm:
+    build:
+      context: ./php
+    volumes:
+      - ../www:/var/www/html
+    expose:
+      - "9000"
+    depends_on:
+      - mysql
+      - redis
+      - memcached
+    networks:
+      - walle-net
+    restart: always
 
 ### PHP-CLI Container #######################################
 
-    php-cli:
-      build:
-        context: ./php-cli
-      volumes:
-        - ../www:/var/www/html
-      tty: true
-      depends_on:
-        - mysql
-        - redis
-        - memcached
+  php-cli:
+    build:
+      context: ./php-cli
+    volumes:
+      - ../www:/var/www/html
+    tty: true
+    depends_on:
+      - mysql
+      - redis
+      - memcached
+    networks:
+      - walle-net
+    restart: always
 
 ### Nginx Server Container ##################################
 
-    nginx:
-      build:
-        context: ./nginx
-      volumes:
-          - ../www:/var/www/html
-      ports:
-          - "8000:80"
-          - "443:443"
-      depends_on:
-          - php-fpm
-          
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+        - ../www:/var/www/html
+    ports:
+        - "8000:80"
+        - "443:443"
+    depends_on:
+        - php-fpm
+    networks:
+      - walle-net
+    restart: always 
 
 ### MySQL Container #########################################
 
-    mysql:
-      image: daocloud.io/library/mysql:5.7
-      volumes:
-        - mysql-data:/var/lib/mysql
-      ports:
-        - "3306:3306"
-      environment:
-        - MYSQL_ROOT_PASSWORD=123456
+  mysql:
+    image: daocloud.io/library/mysql:5.7
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    networks:
+      - walle-net
+    restart: always 
         
 ### redis Container #############################
-    redis:
-      image: daocloud.io/library/redis
-      restart: always
-      expose:
-        - "6379"
-      ports:
-        - "6379:6379"
-      volumes:
-        - ./data/redis:/data
-      command: redis-server --appendonly yes 
+    
+  redis:
+    image: daocloud.io/library/redis
+    restart: always
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    command: redis-server --appendonly yes
+    networks:
+      - walle-net
+    restart: always
     
 ### memecached Container ##########
-    memcached:
-      image: memcached
-      expose:
-        - "11211"
+    
+  memcached:
+    image: memcached
+    expose:
+      - "11211"
+    networks:
+      - walle-net
+    restart: always
     
 ### PHPMyAdmin Container #########################################
-
-    phpmyadmin:
-      image: daocloud.io/daocloud/phpmyadmin
-      ports:
-        - "8080:80"
-      depends_on:
-        - mysql
-
+    
+  phpmyadmin:
+    image: daocloud.io/daocloud/phpmyadmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - walle-net
+    restart: always
+      
 ### Networks ###################################
 
-
+networks:
+  walle-net:
+    driver: bridge
 ### Volumes Setup ###########################################
-
-volumes:
-    mysql-data:
